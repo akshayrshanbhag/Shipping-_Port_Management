@@ -157,7 +157,7 @@ int unload_Cargo(int n)
 {
     if(n<=capacity)
     {
-        cout<<"Unloaded the Cargo Successfully!"<<endl;
+        cout<<"Unloaded the Cargo Successfully!\n"<<endl;
 
     }
     else
@@ -204,7 +204,7 @@ int levy_customs(Cargo** cargo,int n)
 if(i==n)
     {
         success = true;
-        cout<<"Customs added to the price of the cargo"<<endl;
+        cout<<"Customs added to the price of the cargo\n"<<endl;
     }
 
 return success;
@@ -247,7 +247,8 @@ int deliver(Cargo **cargo, int n)
             {
                 cout<<cargo[i]->name<<"\t\t"<<cargo[i]->price<<"\t\t"<<cargo[i]->type<<endl;
             }
-            cout<<"All Cargo Delivered"<<endl;
+            cout<<"All Cargo Delivered!\n"<<endl;
+            cout<<"----------------------------------------------------------"<<endl;
             delivery_status = true;
         }
     else{
@@ -277,13 +278,19 @@ void operate(Arrival_departure_ships **lists,int counter)
    int i;
    for(i=0;i<counter;i++)
    {
+       cout<<"SHIP NUMBER : "<<lists[i]->ship_no;
         if(lists[i]->arrival == true && lists[i]->departure == false)
         {
+            cout<<"\tARRIVAL SHIP"<<endl;
             call_ground_transport(lists[i]);
             call_delivery(lists[i]->items,lists[i]->total_items);
         }
         else if(lists[i]->arrival == false && lists[i]->departure == true)
+        {
+            cout<<"\tDEPARTING SHIP"<<endl;
             send_departure_ship_info(lists[i]->port_id);
+        }
+
    }
 }
 
@@ -301,6 +308,7 @@ void call_delivery(Cargo* cargo[],int n)
 void send_departure_ship_info(int id)
 {
     cout<<"Sent the departure ships information to port "<<id<<endl;
+    cout<<"----------------------------------------------------------"<<endl;
 }
 };
 
@@ -419,6 +427,8 @@ int main()
     cout<<"\nShips have reached the Prime Port!!"<<endl;
     cout<<"\nPress any key to start port operations....";
     getch();
+
+    cout<<"\n----------------------------------------------------------"<<endl;
 
     PM->operate(ADS,5);
     cout<<"\t\t\tTHANK YOU"<<endl;
