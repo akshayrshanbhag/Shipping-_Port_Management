@@ -1,12 +1,10 @@
 #include<iostream>
-#include<windows.h>
+#include<exception>
 #include<conio.h>
 #include<iterator>
 #include<map>
 
-
 using namespace std;
-
 
 class Ships
 {
@@ -107,6 +105,17 @@ class Current_port_info
       }
 };
 
+
+
+class delivery_exception : public exception
+{
+public:
+    const char* what() const throw()
+    {
+        return "Delivery Failed\n";
+    }
+
+};
 
 
 class Arrival_departure_ships : public Ships
@@ -240,6 +249,7 @@ int deliver(Cargo **cargo, int n)
    bool temp;
    int i;
    temp = customs.levy_customs(cargo,n);
+   try{
    if(temp==true)
         {
             cout<<"Name\t\tPrice\t\tType"<<endl;
@@ -253,7 +263,18 @@ int deliver(Cargo **cargo, int n)
         }
     else{
         delivery_status =  false;
+        delivery_exception d;
+        throw d;
     }
+}
+    catch(exception &e)
+    {
+
+     cout<<e.what()<<endl;
+
+    }
+
+
 
    return delivery_status;
 }
@@ -367,7 +388,7 @@ int main()
     ///Arrival Departure Ships
     ADS[0]= new Arrival_departure_ships(S,19,6,2021,1,0,C1,n1,8,2);
     ADS[1]= new Arrival_departure_ships(S,19,6,2021,1,0,C2,n2,3,2);
-    ADS[2]= new Arrival_departure_ships(S,19,6,2021,0,1,C3,n3,0,7);
+    ADS[2]= new Arrival_departure_ships(S,19,6,2021,0,1,C3,n3,1,7);
     ADS[3]= new Arrival_departure_ships(S,19,6,2021,1,0,C2,n2,9,2);
     ADS[4]= new Arrival_departure_ships(S,19,6,2021,0,1,C1,n1,4,7);
     cout<<"\nArrival & Departure Ships Scheduled..."<<endl;
@@ -389,14 +410,14 @@ int main()
 
     Ports* P[8];
     /// Ports(string name,int arrival_capacity,int departure_capacity,string location,float wind,bool open,bool close,int port_id)
-    P[0]= new Ports("A",100,100,"India",5.3,1,0,0);
-    P[1]= new Ports("B",100,100,"India",5.3,1,0,1);
+    P[0]= new Ports("A",100,100,"India",3.3,1,0,0);
+    P[1]= new Ports("B",100,100,"India",4.3,1,0,1);
     P[2]= new Ports("C",100,100,"India",5.3,1,0,2);
-    P[3]= new Ports("D",100,100,"India",5.3,1,0,3);
-    P[4]= new Ports("E",100,100,"India",5.3,1,0,4);
-    P[5]= new Ports("F",100,100,"India",5.3,1,0,5);
-    P[6]= new Ports("G",100,100,"India",5.3,1,0,6);
-    P[7]= new Ports("H",100,100,"India",5.3,1,0,7);
+    P[3]= new Ports("D",100,100,"India",6.3,1,0,3);
+    P[4]= new Ports("E",100,100,"India",2.3,1,0,4);
+    P[5]= new Ports("F",100,100,"India",1.3,1,0,5);
+    P[6]= new Ports("G",100,100,"India",0.3,1,0,6);
+    P[7]= new Ports("H",100,100,"India",7.3,1,0,7);
     cout<<"Ports Information Loaded..."<<endl;
 
     cout<<"\nPress Any Key To load our Prime Port...";
@@ -407,7 +428,7 @@ int main()
     cout<<"Press Any Key to Display the Prime Port...";
     getch();
     cout<<"\n\nNAME\t\tLocation\t\tPort ID\n";
-    cout<<PM->name<<"\t\t"<<PM->location<<"\t\t"<<PM->port_id<<endl;
+    cout<<PM->name<<"\t\t"<<PM->location<<"\t\t\t"<<PM->port_id<<endl;
 
     cout<<"Press Any Key to START SAILING THE SHIPS!...";
     getch();
